@@ -138,8 +138,12 @@ jobs:
           cd ${RUNNER_WORKSPACE}/build-libroadrunner-deps
           cmake --build . --target install --config ${{ matrix.platform.build_type }}
 
+      - name: Set artifacts path
+        shell: bash
+        run: echo "::set-output name=artifacts_path::${RUNNER_WORKSPACE}/install-libroadrunner-deps"
+
       - name: Upload libroadrunner dependencies
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v1
         with:
           name: libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}
-          path: ${RUNNER_WORKSPACE}/install-libroadrunner-deps
+          path: ${{ steps.set_path.outputs.artifacts_path }}
