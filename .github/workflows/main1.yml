@@ -38,8 +38,7 @@ jobs:
           cd build-glibc
           ../configure --prefix=${RUNNER_WORKSPACE}/glibc/install-glibc
           make -j4
-          sudo make install
-          export LD_LIBRARY_PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/lib:$LD_LIBRARY_PATH
+          make install
           export "PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/bin:$PATH" >> $GITHUB_PATH
 
       - name: Upload libroadrunner dependencies binaries
