@@ -35,7 +35,7 @@ jobs:
         echo "Hello, world!" > mytextfile.txt
 
       - name: Upload libroadrunner dependencies binaries for manylinux platforms
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: libroadrunner-dependencies-manylinux
           path: ${{ github.workspace }}/mydirectory
