@@ -29,10 +29,10 @@ jobs:
     steps:
       - name: create a text file
         run: |
-        cd ${{ github.workspace }}
-        mkdir -p mydirectory
-        cd mydirectory
-        echo "Hello, world!" > mytextfile.txt
+          cd ${{ github.workspace }}
+          mkdir -p mydirectory
+          cd mydirectory
+          echo "Hello, world!" > mytextfile.txt
 
       - name: Upload libroadrunner dependencies binaries for manylinux platforms
         uses: actions/upload-artifact@v1
