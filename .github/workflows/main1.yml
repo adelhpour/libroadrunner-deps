@@ -25,13 +25,22 @@ jobs:
       - name: Checkout libroadrunner dependencies
         uses: actions/checkout@v3
 
-      - name: Create a text file
-        run: echo "Hello, world!" > hello.txt
-
-      - name: list files in the host
+      - name: build glibc from source
         run: |
-          cp hello.txt /tmp
-          ls -l /tmp
+          cd ${RUNNER_WORKSPACE}
+          mkdir glibc
+          curl -L https://ftp.gnu.org/gnu/libc/glibc-2.31.tar.gz
+          tar -xvf glibc-2.31.tar.gz
+          rm glibc-2.31.tar.gz
+          cd glibc-2.31
+          mkdir build-glibc
+          mkdir install-glibc
+          cd build-glibc
+          ../configure --prefix=${RUNNER_WORKSPACE}/glibc/install-glibc
+          make -j4
+          sudo make install
+          export LD_LIBRARY_PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/lib:$LD_LIBRARY_PATH
+          export "PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/bin:$PATH" >> $GITHUB_PATH
 
       - name: Upload libroadrunner dependencies binaries
         uses: actions/upload-artifact@v4
