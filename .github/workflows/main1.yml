@@ -32,3 +32,9 @@ jobs:
         run: |
           cp hello.txt /tmp
           ls -l /tmp
+
+      - name: Upload libroadrunner dependencies binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}
+          path: /tmp
