@@ -17,26 +17,44 @@ jobs:
             os_name: ubuntu-latest
             container_image: quay.io/pypa/manylinux2014_x86_64
             build_type: Release
-          - name: ubuntu-latest-to-upload-manylinux2014-release
-            os_type: ubuntu-to-upload
+          - name: manylinux2014-debug
+            os_type: manylinux
             os_name: ubuntu-latest
-            build_type: Release
+            container_image: quay.io/pypa/manylinux2014_x86_64
+            build_type: Debug
     runs-on: ${{ matrix.platform.os_name }}
     container:
       image: ${{ matrix.platform.container_image || '' }}
 
     steps:
-      - name: Checkout libroadrunner dependencies
-        uses: actions/checkout@v3
-
-      - name: Generate data
-        run: echo "Hello, world!" > generated_data.txt
-
-      # Set up workspace to share data
-      - name: Set up workspace
-        run: mkdir -p ${{ github.workspace }}/shared && cp generated_data.txt ${{ github.workspace }}/shared
-
-      - name: Retrieve data
+      - name: Add libroadrunner dependencies binaries for manylinux platforms to the workspace
+        if : matrix.platform.os_type == 'manylinux'
+        shell : bash
         run: |
-          cp ${{ github.workspace }}/shared/generated_data.txt .
-          ls -l
+          echo "Copying libroadrunner dependencies binaries for manylinux platforms to the workspace" >> ${RUNNER_WORKSPACE}/install-libroadrunner-deps/abcg.txt
+          mkdir -p ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
+          cp -r ${RUNNER_WORKSPACE}/install-libroadrunner-deps/* ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
+          echo "checking the directory ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}"
+          ls -l ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
+
+  upload_manylinux_artifacts:
+    name: Upload manylinux artifacts
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Release, Debug]
+    runs-on: ubuntu-latest
+    needs: build_on_OSs
+
+    steps:
+      - name: chekc the directory
+        run: |
+          echo "Checking the directory {{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}"
+          ls -l ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}
+        
+
+      - name: Upload libroadrunner dependencies binaries for manylinux platforms
+        uses: actions/upload-artifact@v4
+        with:
+          name: libroadrunner-deps-manylinux2014-${{ matrix.build_type }}
+          path: ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}
