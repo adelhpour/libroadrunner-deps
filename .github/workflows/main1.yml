@@ -17,6 +17,10 @@ jobs:
             os_name: ubuntu-latest
             container_image: quay.io/pypa/manylinux2014_x86_64
             build_type: Release
+          - name: ubuntu-latest-to-upload-manylinux2014-release
+            os_type: ubuntu-to-upload
+            os_name: ubuntu-latest
+            build_type: Release
     runs-on: ${{ matrix.platform.os_name }}
     container:
       image: ${{ matrix.platform.container_image || '' }}
@@ -25,24 +29,14 @@ jobs:
       - name: Checkout libroadrunner dependencies
         uses: actions/checkout@v3
 
-      - name: build glibc from source
-        run: |
-          cd ${RUNNER_WORKSPACE}
-          mkdir glibc
-          curl -L https://ftp.gnu.org/gnu/libc/glibc-2.31.tar.gz
-          tar -xvf glibc-2.31.tar.gz
-          rm glibc-2.31.tar.gz
-          cd glibc-2.31
-          mkdir build-glibc
-          mkdir install-glibc
-          cd build-glibc
-          # ../configure --prefix=${RUNNER_WORKSPACE}/glibc/install-glibc
-          # make -j4
-          # make install
-          # export "PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/bin:$PATH" >> $GITHUB_PATH
+      - name: Generate data
+        run: echo "Hello, world!" > generated_data.txt
 
-      - name: Upload libroadrunner dependencies binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}
-          path: /tmp
+      # Set up workspace to share data
+      - name: Set up workspace
+        run: mkdir -p ${{ github.workspace }}/shared && cp generated_data.txt ${{ github.workspace }}/shared
+
+      - name: Retrieve data
+        run: |
+          cp ${{ github.workspace }}/shared/generated_data.txt .
+          ls -l
