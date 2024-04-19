@@ -142,4 +142,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libroadrunner-deps
-          path: ${{ matrix.platform.os_type }}-latest-${{ matrix.platform.build_type }}-artifacts
+          path: ${RUNNER_WORKSPACE}/install-libroadrunner-deps
