@@ -53,11 +53,12 @@ jobs:
       - name: check the directory
         run: |
           echo "checking ${{ github.workspace }}"
-          ls -l ${{ github.workspace }}
+          cd ${{ github.workspace }}
+          pwd
           echo "checking ${{ github.workspace }}/manylinux2014-artifacts"
-          ls -l ${{ github.workspace }}/manylinux2014-artifacts
-          echo "checking ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}"
-          ls -l ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}
+          ls
+          echo "pwd"
+          pwd
         
 
       - name: Upload libroadrunner dependencies binaries for manylinux platforms
