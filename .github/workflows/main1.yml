@@ -28,8 +28,5 @@ jobs:
       - name: Create a text file
         run: echo "Hello, world!" > hello.txt
 
-      - name: copy text file from container to the host
-        run: cp hello.txt ${{ runner.workspace }}
-
       - name: list files in the host
         run: ls ${{ runner.workspace }}
