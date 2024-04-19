@@ -29,4 +29,7 @@ jobs:
         run: echo "Hello, world!" > hello.txt
 
       - name: list files in the host
-        run: ls /home/runner/work
+        run: |
+          pwd
+          cd
+          pwd
