@@ -32,7 +32,7 @@ jobs:
 
       - name: create a text file
         run: |
-          cd ${{ github.workspace }}
+          cd ${ RUNNER_WORKSPACE }
           mkdir -p mydirectory
           cd mydirectory
           echo "Hello, world!" > mytextfile.txt
@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: libroadrunner-dependencies-manylinux
-          path: ${{ github.workspace }}/mydirectory
+          path: ${ RUNNER_WORKSPACE }/mydirectory
