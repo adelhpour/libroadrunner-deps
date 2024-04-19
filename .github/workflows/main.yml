@@ -55,6 +55,8 @@ jobs:
     steps:
       - name: Checkout libroadrunner dependencies
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - name: Set MSVC as the default compiler on Windows
         if: matrix.platform.os_type == 'windows'
