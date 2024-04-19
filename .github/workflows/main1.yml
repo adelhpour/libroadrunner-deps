@@ -31,7 +31,10 @@ jobs:
         if : matrix.platform.os_type == 'manylinux'
         shell : bash
         run: |
-          echo "Copying libroadrunner dependencies binaries for manylinux platforms to the workspace" >> ${RUNNER_WORKSPACE}/install-libroadrunner-deps/abcg.txt
+          cd ${RUNNER_WORKSPACE}
+          mkdir -p install-libroadrunner-deps
+          cd install-libroadrunner-deps
+          echo "Copying libroadrunner dependencies binaries for manylinux platforms to the workspace" >> abcg.txt
           mkdir -p ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
           cp -r ${RUNNER_WORKSPACE}/install-libroadrunner-deps/* ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
           echo "checking the directory ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}"
