@@ -52,8 +52,8 @@ jobs:
     steps:
       - name: check the directory
         run: |
-          echo "checking {{ github.workspace }}"
-          ls -l {{ github.workspace }}
+          echo "checking ${{ github.workspace }}"
+          ls -l ${{ github.workspace }}
           echo "checking ${{ github.workspace }}/manylinux2014-artifacts"
           ls -l ${{ github.workspace }}/manylinux2014-artifacts
           echo "checking ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}"
