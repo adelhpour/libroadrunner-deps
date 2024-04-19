@@ -131,7 +131,7 @@ jobs:
           cmake --build . --target install --config ${{ matrix.platform.build_type }}
 
       - name: Upload libroadrunner dependencies binaries for non-manylinux platforms
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}
           path: ${RUNNER_WORKSPACE}/install-libroadrunner-deps
