@@ -34,7 +34,6 @@ jobs:
         shell: bash
         run: |
           cd ${RUNNER_WORKSPACE}
-          cd ${ RUNNER_WORKSPACE }
           mkdir -p mydirectory
           cd mydirectory
           echo "Hello, world!" > mytextfile.txt
@@ -43,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: libroadrunner-dependencies-manylinux
-          path: ${ RUNNER_WORKSPACE }/mydirectory
+          path: ${RUNNER_WORKSPACE}/mydirectory
