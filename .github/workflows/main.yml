@@ -146,7 +146,7 @@ jobs:
           # we need to use relative path as actions/upload-artifact@v1 cannot find it on containerized runners
           echo "artifacts_path=../install-libroadrunner-deps" >> "${GITHUB_ENV}"
 
-      - name: Upload libroadrunner dependencies
+      - name: Upload libroadrunner dependencies binaries
         uses: actions/upload-artifact@v1
         with:
           name: ${{env.artifacts_name}}
