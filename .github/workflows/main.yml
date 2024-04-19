@@ -22,14 +22,6 @@ jobs:
             os_name: macos-latest
             arch: x86_64
             build_type: Debug
-          - name: ubuntu-latest-release
-            os_type: ubuntu
-            os_name: ubuntu-latest
-            build_type: Release
-          - name: ubuntu-latest-debug
-            os_type: ubuntu
-            os_name: ubuntu-latest
-            build_type: Debug
           - name: windows-latest-release
             os_type: windows
             os_name: windows-latest
@@ -138,8 +130,32 @@ jobs:
           cd ${RUNNER_WORKSPACE}/build-libroadrunner-deps
           cmake --build . --target install --config ${{ matrix.platform.build_type }}
 
-      - name: Upload libroadrunner dependencies binaries
+      - name: Upload libroadrunner dependencies binaries for non-manylinux platforms
+        if : matrix.platform.os_type != 'manylinux'
         uses: actions/upload-artifact@v4
         with:
           name: libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}
           path: ${RUNNER_WORKSPACE}/install-libroadrunner-deps
+
+      - name: Add libroadrunner dependencies binaries for manylinux platforms to the workspace
+        if : matrix.platform.os_type == 'manylinux'
+        shell : bash
+        run: |
+          mkdir -p ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
+          cp -r ${RUNNER_WORKSPACE}/install-libroadrunner-deps/* ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
+
+  pload_manylinux_artifacts:
+    name: Upload manylinux artifacts
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Release, Debug]
+    runs-on: ubuntu-latest
+    needs: build_on_OSs
+
+    steps:
+      - name: Upload libroadrunner dependencies binaries for manylinux platforms
+        uses: actions/upload-artifact@v4
+        with:
+          name: libroadrunner-deps-manylinux2014-${{ matrix.build_type }}
+          path: ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}
