@@ -36,10 +36,10 @@ jobs:
           mkdir build-glibc
           mkdir install-glibc
           cd build-glibc
-          ../configure --prefix=${RUNNER_WORKSPACE}/glibc/install-glibc
-          make -j4
-          make install
-          export "PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/bin:$PATH" >> $GITHUB_PATH
+          # ../configure --prefix=${RUNNER_WORKSPACE}/glibc/install-glibc
+          # make -j4
+          # make install
+          # export "PATH=${RUNNER_WORKSPACE}/glibc/install-glibc/bin:$PATH" >> $GITHUB_PATH
 
       - name: Upload libroadrunner dependencies binaries
         uses: actions/upload-artifact@v4
