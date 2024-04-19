@@ -138,7 +138,7 @@ jobs:
           cd ${RUNNER_WORKSPACE}/build-libroadrunner-deps
           cmake --build . --target install --config ${{ matrix.platform.build_type }}
 
-      - name: Upload libroadrunner dependencies
+      - name: Upload libroadrunner dependencies binaries
         uses: actions/upload-artifact@v4
         with:
           name: libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}
