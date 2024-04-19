@@ -141,6 +141,7 @@ jobs:
       - name: Set artifacts path and name
         shell: bash
         run: |
+          cd ${RUNNER_WORKSPACE}
           echo "displaying ${RUNNER_WORKSPACE}/install-libroadrunner-deps"
           ls ${RUNNER_WORKSPACE}/install-libroadrunner-deps
           echo "artifacts_name=libroadrunner-deps-${{ matrix.platform.name }}-${{ matrix.platform.build_type }}" >> "${GITHUB_ENV}" 
@@ -150,4 +151,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: ${{env.artifacts_name}}
-          path: ${{env.artifacts_path}}
+          path: ../install-libroadrunner-deps
