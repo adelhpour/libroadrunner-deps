@@ -139,7 +139,7 @@ jobs:
           cmake --build . --target install --config ${{ matrix.platform.build_type }}
 
       - name: Upload libroadrunner dependencies
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: libroadrunner-deps
           path: ${{ matrix.platform.os_type }}-latest-${{ matrix.platform.build_type }}-artifacts
