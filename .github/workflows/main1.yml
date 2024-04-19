@@ -27,42 +27,15 @@ jobs:
       image: ${{ matrix.platform.container_image || '' }}
 
     steps:
-      - name: Add libroadrunner dependencies binaries for manylinux platforms to the workspace
-        if : matrix.platform.os_type == 'manylinux'
-        shell : bash
+      - name: create a text file
         run: |
-          cd ${RUNNER_WORKSPACE}
-          mkdir -p install-libroadrunner-deps
-          cd install-libroadrunner-deps
-          echo "Copying libroadrunner dependencies binaries for manylinux platforms to the workspace" >> abcg.txt
-          mkdir -p ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
-          cp -r ${RUNNER_WORKSPACE}/install-libroadrunner-deps/* ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
-          echo "checking the directory ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}"
-          ls -l ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.platform.build_type }}
-
-  upload_manylinux_artifacts:
-    name: Upload manylinux artifacts
-    strategy:
-      fail-fast: false
-      matrix:
-        build_type: [Release, Debug]
-    runs-on: ubuntu-latest
-    needs: build_on_OSs
-
-    steps:
-      - name: check the directory
-        run: |
-          echo "checking ${{ github.workspace }}"
-          cd ${{ github.workspace }}
-          pwd
-          echo "checking ${{ github.workspace }}/manylinux2014-artifacts"
-          ls
-          echo "pwd"
-          pwd
-        
+        cd ${{ github.workspace }}
+        mkdir -p mydirectory
+        cd mydirectory
+        echo "Hello, world!" > mytextfile.txt
 
       - name: Upload libroadrunner dependencies binaries for manylinux platforms
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
-          name: libroadrunner-deps-manylinux2014-${{ matrix.build_type }}
-          path: ${{ github.workspace }}/manylinux2014-artifacts/${{ matrix.build_type }}
+          name: libroadrunner-dependencies-manylinux
+          path: ${{ github.workspace }}/mydirectory
