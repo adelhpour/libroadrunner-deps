@@ -62,8 +62,9 @@ jobs:
         if: matrix.platform.os_type == 'windows'
         uses: ilammy/msvc-dev-cmd@v1.6.0
 
-      - name: Update gcc on ManyLinux
+      - name: Upgrade gcc on ManyLinux
         if: matrix.platform.os_type == 'manylinux'
+        shell: bash
         run: |
           yum install -y centos-release-scl
           yum install -y devtoolset-11
