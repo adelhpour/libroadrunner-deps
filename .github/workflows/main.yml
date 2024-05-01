@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_on_OSs:
-    name: Build on ${{ matrix.platform.name }}
+    name: Build LibRoadRunner Dependencies on ${{ matrix.platform.name }}
     strategy:
       fail-fast: false
       matrix:
@@ -135,10 +135,10 @@ jobs:
           cd ${RUNNER_WORKSPACE}/build-libroadrunner-deps
           cmake $GITHUB_WORKSPACE \
           -G "Ninja" \
-          -DCMAKE_BUILD_TYPE=${{ matrix.platform.build_type }} \
-          -DCMAKE_OSX_ARCHITECTURES=${{ matrix.platform.arch }} \
           -DCMAKE_C_COMPILER_LAUNCHER=${COMPILER_LAUNCHER} \
           -DCMAKE_CXX_COMPILER_LAUNCHER=${COMPILER_LAUNCHER} \
+          -DCMAKE_BUILD_TYPE=${{ matrix.platform.build_type }} \
+          -DCMAKE_OSX_ARCHITECTURES=${{ matrix.platform.arch }} \
           -DCMAKE_INSTALL_PREFIX="${RUNNER_WORKSPACE}/install-libroadrunner-deps"
 
       - name: Build and Install libroadrunner dependencies
