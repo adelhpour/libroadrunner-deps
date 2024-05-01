@@ -56,7 +56,7 @@ jobs:
       image: ${{ matrix.platform.container_image || '' }}
 
     steps:
-      - name: Checkout libroadrunner dependencies
+      - name: Checkout LibRoadRunner Dependencies
         uses: actions/checkout@v3
         with:
           submodules: recursive
@@ -132,7 +132,7 @@ jobs:
         shell: bash
         run: mkdir -p ${RUNNER_WORKSPACE}/build-libroadrunner-deps
 
-      - name: Configure CMake for libroadrunner dependencies
+      - name: Configure CMake for LibRoadRunner Dependencies
         shell: bash
         run: |
           cd ${RUNNER_WORKSPACE}/build-libroadrunner-deps
@@ -144,7 +144,7 @@ jobs:
           -DCMAKE_OSX_ARCHITECTURES=${{ matrix.platform.arch }} \
           -DCMAKE_INSTALL_PREFIX="${RUNNER_WORKSPACE}/install-libroadrunner-deps"
 
-      - name: Build and Install libroadrunner dependencies
+      - name: Build and install LibRoadRunner Dependencies
         shell: bash
         run: |
           cd ${RUNNER_WORKSPACE}/build-libroadrunner-deps
@@ -158,7 +158,7 @@ jobs:
           # we need to use relative path as actions/upload-artifact@v1 cannot find it on containerized runners
           echo "artifacts_path=../install-libroadrunner-deps" >> "${GITHUB_ENV}"
 
-      - name: Upload libroadrunner dependencies binaries
+      - name: Upload LibRoadRunner Dependencies binaries
         uses: actions/upload-artifact@v1
         with:
           name: ${{env.artifacts_name}}
