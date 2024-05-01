@@ -68,8 +68,6 @@ jobs:
           yum install -y centos-release-scl
           yum install -y devtoolset-11
           scl enable devtoolset-11 bash
-          gcc --version
-          g++ --version
 
       - name: Setup Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
@@ -84,6 +82,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y ccache
           elif [ "${{ matrix.platform.os_type }}" == 'manylinux' ]; then
+            gcc --version
+            g++ --version
             mkdir -p ccache
             cd ccache
             curl -L https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1.tar.gz > ccache.tar.gz
