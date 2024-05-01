@@ -66,8 +66,11 @@ jobs:
         if: matrix.platform.os_type == 'manylinux'
         shell: bash
         run: |
+          cd ${RUNNER_WORKSPACE}
+          gcc --version
+          g++ --version
           yum install -y centos-release-scl
-          yum install -y devtoolset-11-gcc devtoolset-11-gcc-c++
+          yum install -y devtoolset-11
           scl enable devtoolset-11 bash
           gcc --version
           g++ --version
