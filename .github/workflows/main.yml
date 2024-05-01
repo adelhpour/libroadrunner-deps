@@ -66,6 +66,7 @@ jobs:
         if: matrix.platform.os_type == 'manylinux'
         shell: bash
         run: |
+          yum update -y
           cd ${RUNNER_WORKSPACE}
           gcc --version
           g++ --version
