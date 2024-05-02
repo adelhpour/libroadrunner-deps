@@ -25,6 +25,16 @@ jobs:
             os_name: macos-11
             arch: x86_64
             build_type: Debug
+          - name: macos-latest-release
+            os_type: macos
+            os_name: macos-latest
+            arch: arm64
+            build_type: Release
+          - name: macos-latest-debug
+            os_type: macos
+            os_name: macos-latest
+            arch: arm64
+            build_type: Debug
           - name: ubuntu-latest-release
             os_type: ubuntu
             os_name: ubuntu-latest
