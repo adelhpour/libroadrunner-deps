@@ -166,7 +166,7 @@ jobs:
           -DCMAKE_C_COMPILER_LAUNCHER=${COMPILER_LAUNCHER} \
           -DCMAKE_CXX_COMPILER_LAUNCHER=${COMPILER_LAUNCHER} \
           -DCMAKE_BUILD_TYPE=${{ matrix.platform.build_type }} \
-          -DCMAKE_OSX_ARCHITECTURES=${OSX_ARCHITECTURES} \`
+          -DCMAKE_OSX_ARCHITECTURES=${OSX_ARCHITECTURES} \
           -DCMAKE_INSTALL_PREFIX="${RUNNER_WORKSPACE}/install-libroadrunner-deps"
 
       - name: Build and install LibRoadRunner Dependencies
